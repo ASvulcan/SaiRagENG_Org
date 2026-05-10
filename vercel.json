@@ -1,8 +1,7 @@
 {
-  "framework": "vite",
-  "rootDirectory": "sairag-engineering-react",
-  "buildCommand": "npx vite build",
-  "outputDirectory": "dist",
+  "framework": null,
+  "buildCommand": "cd sairag-engineering-react && npx vite build",
+  "outputDirectory": "sairag-engineering-react/dist",
   "installCommand": "cd sairag-engineering-react && npm install",
   "nodeVersion": "20.x"
 }
