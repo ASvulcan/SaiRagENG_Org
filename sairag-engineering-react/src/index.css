@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg: #ffffff;
+    --bg-alt: #f8f9fa;
+    --bg-card: rgba(255, 255, 255, 0.9);
+    --text: #1a1a2e;
+    --text-muted: #6b7280;
+    --border: #e5e7eb;
+    --accent: #f97316;
+    --accent-rgb: 249, 115, 22;
+    --accent-light: #ffedd5;
+    --nav-bg: rgba(255, 255, 255, 0.9);
+  }
+
+  .dark {
+    --bg: #000000;
+    --bg-alt: #080808;
+    --bg-card: rgba(18, 18, 18, 0.8);
+    --text: #f9fafb;
+    --text-muted: #9ca3af;
+    --border: #1f1f1f;
+    --accent: #f97316;
+    --accent-rgb: 249, 115, 22;
+    --accent-light: #431407;
+    --nav-bg: rgba(0, 0, 0, 0.8);
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+}
+
+@layer components {
+  .section-label {
+    @apply flex items-center gap-3 text-xs font-semibold tracking-[0.15em] uppercase;
+    color: var(--accent);
+  }
+
+  .section-label .line {
+    @apply w-6 h-px;
+    background-color: var(--accent);
+  }
+
+  .section-title {
+    @apply text-3xl md:text-4xl font-bold tracking-tight mt-2;
+    color: var(--text);
+  }
+
+  .section-desc {
+    color: var(--text-muted);
+  }
+
+  .card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(8px);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+
+  .card:hover {
+    border-color: rgba(var(--accent-rgb), 0.4);
+    box-shadow: 0 16px 32px -16px rgba(var(--accent-rgb), 0.15);
+    transform: translateY(-4px);
+  }
+
+  .btn-accent {
+    background-color: var(--accent);
+    color: #ffffff;
+    @apply px-5 py-2.5 text-sm font-medium rounded-lg transition-all;
+  }
+
+  .btn-accent:hover {
+    filter: brightness(1.1);
+  }
+
+  .nav-link {
+    color: var(--nav-text-color, var(--text));
+    @apply transition-colors duration-300;
+  }
+
+  .nav-link:hover {
+    color: var(--accent) !important;
+  }
+}
