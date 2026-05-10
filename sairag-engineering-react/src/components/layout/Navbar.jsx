@@ -39,16 +39,19 @@ export function Navbar() {
     { name: "Contact", href: isHome ? "#contact" : "/#contact" },
   ];
 
+  // When mobile menu is open on the hero, switch header to themed background
+  const effectiveNavBg = mobileOpen && atHero ? "var(--bg)" : navBg;
+  const effectiveTextColor = mobileOpen && atHero ? "var(--text)" : textColor;
+
   return (
     <header
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
       style={{
-        backgroundColor: navBg,
-        borderBottom: scrolled ? "1px solid rgba(255,255,255,0.12)" : "1px solid transparent",
-        // Only apply blur when scrolled to save GPU resources
+        backgroundColor: effectiveNavBg,
+        borderBottom: (scrolled || mobileOpen) ? "1px solid var(--border)" : "1px solid transparent",
         backdropFilter: scrolled ? "blur(8px)" : "none",
         WebkitBackdropFilter: scrolled ? "blur(8px)" : "none",
-        "--nav-text-color": textColor,
+        "--nav-text-color": effectiveTextColor,
       }}
     >
       <div className="max-w-6xl mx-auto px-6 flex items-center justify-between h-20 md:h-24">
@@ -97,7 +100,7 @@ export function Navbar() {
           <button
             onClick={toggle}
             className="p-2 transition-colors"
-            style={{ color: textColor }}
+            style={{ color: effectiveTextColor }}
             aria-label="Toggle theme"
           >
             {dark ? <Sun size={20} /> : <Moon size={20} />}
@@ -105,7 +108,7 @@ export function Navbar() {
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="p-2"
-            style={{ color: textColor }}
+            style={{ color: effectiveTextColor }}
             aria-label="Menu"
           >
             {mobileOpen ? <X size={24} /> : <Menu size={24} />}
@@ -113,9 +116,9 @@ export function Navbar() {
         </div>
       </div>
 
-          {mobileOpen && (
+      {mobileOpen && (
         <div
-          className="md:hidden border-t"
+          className="md:hidden border-t max-h-[calc(100vh-5rem)] overflow-y-auto"
           style={{
             backgroundColor: "var(--bg)",
             borderColor: "var(--border)",
@@ -128,7 +131,7 @@ export function Navbar() {
                   key={l.name}
                   href={l.href}
                   className="py-3 text-lg font-semibold transition-colors"
-                  style={{ color: textColor }}
+                  style={{ color: "var(--text)" }}
                   onClick={() => setMobileOpen(false)}
                 >
                   {l.name}
@@ -138,7 +141,7 @@ export function Navbar() {
                   key={l.name}
                   href={l.href}
                   className="py-3 text-lg font-semibold transition-colors"
-                  style={{ color: textColor }}
+                  style={{ color: "var(--text)" }}
                   onClick={() => setMobileOpen(false)}
                 >
                   {l.name}
