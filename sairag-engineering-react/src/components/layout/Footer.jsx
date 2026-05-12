@@ -1,6 +1,33 @@
 import { Logo } from "../ui/Logo";
 
+import { Mail, Phone, MapPin } from "lucide-react";
+import { useLocation } from "wouter";
+import { useCallback } from "react";
+
 export function Footer() {
+  const [location, navigate] = useLocation();
+
+  const handleQuickLink = useCallback((e, name) => {
+    e.preventDefault();
+    if (name === "About") {
+      navigate("/about");
+      window.scrollTo(0, 0);
+    } else {
+      const sectionId = name.toLowerCase();
+      // If not on home page, navigate to home first with hash
+      if (location !== "/") {
+        navigate("/");
+        // Wait for navigation then scroll
+        setTimeout(() => {
+          const el = document.getElementById(sectionId);
+          if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 100);
+      } else {
+        const el = document.getElementById(sectionId);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+  }, [navigate, location]);
   return (
     <footer
       className="border-t py-12"
@@ -27,7 +54,8 @@ export function Footer() {
               {["Home", "About", "Services", "Career", "Contact"].map((name) => (
                 <li key={name}>
                   <a
-                    href={`#${name.toLowerCase()}`}
+                    href={name === "About" ? "/about" : `#${name.toLowerCase()}`}
+                    onClick={(e) => handleQuickLink(e, name)}
                     className="text-sm transition-colors"
                     style={{ color: "var(--text-muted)" }}
                     onMouseEnter={(e) => (e.target.style.color = "var(--accent)")}
@@ -43,16 +71,23 @@ export function Footer() {
           <div>
             <h4 className="text-xs font-semibold uppercase tracking-wider mb-4" style={{ color: "var(--accent)" }}>Contact</h4>
             <ul className="space-y-3 text-sm" style={{ color: "var(--text-muted)" }}>
-              <li>
+              <li className="flex items-start gap-2.5">
+                <Mail size={14} className="mt-0.5 shrink-0" style={{ color: "var(--accent)" }} />
                 <a href="mailto:engineering@sairag.net" className="hover:underline" style={{ color: "var(--accent)" }}>
                   engineering@sairag.net
                 </a>
               </li>
-              <li>+91-8668479379</li>
-              <li className="leading-relaxed">
-                F102, Mahindra Royale Society,<br />
-                Nehru Nagar, Pimpri,<br />
-                Pune - 411018, India
+              <li className="flex items-start gap-2.5">
+                <Phone size={14} className="mt-0.5 shrink-0" style={{ color: "var(--accent)" }} />
+                <span>+91-8668479379</span>
+              </li>
+              <li className="flex items-start gap-2.5 leading-relaxed">
+                <MapPin size={14} className="mt-0.5 shrink-0" style={{ color: "var(--accent)" }} />
+                <span>
+                  F102, Mahindra Royale Society,<br />
+                  Nehru Nagar, Pimpri,<br />
+                  Pune - 411018, India
+                </span>
               </li>
             </ul>
           </div>

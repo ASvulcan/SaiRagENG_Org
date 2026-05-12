@@ -1,6 +1,25 @@
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Mail, MapPin, Phone, Send } from "lucide-react";
+
+function GlowCard({ className, children, ...props }) {
+  const ref = useRef(null);
+  const handleMouseMove = useCallback((e) => {
+    const rect = ref.current?.getBoundingClientRect();
+    if (!rect) return;
+    ref.current.style.setProperty("--mouse-x", `${((e.clientX - rect.left) / rect.width) * 100}%`);
+    ref.current.style.setProperty("--mouse-y", `${((e.clientY - rect.top) / rect.height) * 100}%`);
+  }, []);
+  const handleMouseLeave = useCallback(() => {
+    ref.current?.style.setProperty("--mouse-x", "50%");
+    ref.current?.style.setProperty("--mouse-y", "50%");
+  }, []);
+  return (
+    <div ref={ref} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} className={className} {...props}>
+      {children}
+    </div>
+  );
+}
 
 const contacts = [
   {
@@ -33,7 +52,6 @@ export function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Simple mailto fallback
     const subject = encodeURIComponent("Contact from SaiRag Website");
     const body = encodeURIComponent(
       `Name: ${form.name}\nEmail: ${form.email}\n\nMessage:\n${form.message}`
@@ -45,38 +63,42 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="py-20 md:py-28" style={{ backgroundColor: "var(--bg-alt)" }}>
-      <div className="max-w-6xl mx-auto px-6">
+    <section id="contact" className="min-h-screen py-20 md:py-28" style={{ backgroundColor: "var(--bg-alt)" }}>
+      <div className="mx-auto max-w-6xl px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="mb-12"
+          className="mx-auto flex w-full max-w-3xl flex-col items-center text-center"
         >
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-6 h-px bg-accent" />
-            <span className="text-xs font-semibold tracking-[0.15em] uppercase text-accent">
+            <div className="w-6 h-px" style={{ backgroundColor: "var(--accent)" }} />
+            <span className="text-xs font-semibold tracking-[0.15em] uppercase" style={{ color: "var(--accent)" }}>
               Contact Us
             </span>
+            <div className="w-6 h-px" style={{ backgroundColor: "var(--accent)" }} />
           </div>
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight" style={{ color: "var(--text)" }}>
             Get in Touch
           </h2>
+          <p className="mt-4 text-sm md:text-base" style={{ color: "var(--text-muted)" }}>
+            We'd love to hear from you. Please fill out this form.
+          </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mt-12 md:mt-16">
           {/* Contact Info Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {contacts.map((c, i) => (
+              {contacts.map((c, i) => (
               <motion.div
                 key={c.title}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className={`card rounded-xl p-5 flex flex-col items-start gap-3 ${i === 2 ? "sm:col-span-2" : ""}`}
               >
+                <GlowCard className={`card rounded-xl p-5 flex flex-col items-start gap-3 ${i === 2 ? "sm:col-span-2" : ""}`}>
                 <div
                   className="w-10 h-10 rounded-lg flex items-center justify-center"
                   style={{ backgroundColor: "var(--accent-light)" }}
@@ -103,25 +125,26 @@ export function Contact() {
                     </address>
                   )}
                 </div>
+                </GlowCard>
               </motion.div>
             ))}
           </div>
 
           {/* Contact Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="card rounded-xl p-6 md:p-8"
-          >
-            <h3 className="text-base font-bold mb-5" style={{ color: "var(--text)" }}>
+          <GlowCard className="card rounded-xl p-6 md:p-8">
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+            <h3 className="text-base font-bold mb-6" style={{ color: "var(--text)" }}>
               Send a Message
             </h3>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-6">
               <div>
                 <label className="block text-xs font-medium mb-1.5" style={{ color: "var(--text-muted)" }}>
-                  Name
+                  Name <span style={{ color: "var(--accent)" }}>*</span>
                 </label>
                 <input
                   type="text"
@@ -129,18 +152,19 @@ export function Contact() {
                   value={form.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-2.5 text-sm rounded-lg border transition-colors outline-none focus:ring-2 focus:ring-accent-rgb/30"
+                  className="w-full px-4 py-3 text-sm rounded-lg border transition-all outline-none focus:ring-2 focus:border-accent"
                   style={{
                     backgroundColor: "var(--bg)",
                     color: "var(--text)",
                     borderColor: "var(--border)",
+                    "--tw-ring-color": "rgba(var(--accent-rgb), 0.3)",
                   }}
                   placeholder="Your name"
                 />
               </div>
               <div>
                 <label className="block text-xs font-medium mb-1.5" style={{ color: "var(--text-muted)" }}>
-                  Email
+                  Email <span style={{ color: "var(--accent)" }}>*</span>
                 </label>
                 <input
                   type="email"
@@ -148,43 +172,46 @@ export function Contact() {
                   value={form.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-2.5 text-sm rounded-lg border transition-colors outline-none focus:ring-2 focus:ring-accent-rgb/30"
+                  className="w-full px-4 py-3 text-sm rounded-lg border transition-all outline-none focus:ring-2 focus:border-accent"
                   style={{
                     backgroundColor: "var(--bg)",
                     color: "var(--text)",
                     borderColor: "var(--border)",
+                    "--tw-ring-color": "rgba(var(--accent-rgb), 0.3)",
                   }}
                   placeholder="your@email.com"
                 />
               </div>
               <div>
                 <label className="block text-xs font-medium mb-1.5" style={{ color: "var(--text-muted)" }}>
-                  Message
+                  Message <span style={{ color: "var(--accent)" }}>*</span>
                 </label>
                 <textarea
                   name="message"
                   value={form.message}
                   onChange={handleChange}
                   required
-                  rows={4}
-                  className="w-full px-4 py-2.5 text-sm rounded-lg border transition-colors outline-none resize-none focus:ring-2 focus:ring-accent-rgb/30"
+                  rows={5}
+                  className="w-full px-4 py-3 text-sm rounded-lg border transition-all outline-none resize-none focus:ring-2 focus:border-accent"
                   style={{
                     backgroundColor: "var(--bg)",
                     color: "var(--text)",
                     borderColor: "var(--border)",
+                    "--tw-ring-color": "rgba(var(--accent-rgb), 0.3)",
                   }}
-                  placeholder="Your message..."
+                  placeholder="Leave us a message..."
                 />
               </div>
               <button
                 type="submit"
-                className="btn-accent inline-flex items-center gap-2 w-full justify-center"
+                className="btn-accent inline-flex items-center gap-2 w-full justify-center py-3"
               >
                 <Send size={16} />
                 {sent ? "Sent!" : "Send Message"}
               </button>
             </form>
-          </motion.div>
+            </motion.div>
+          </GlowCard>
         </div>
 
         <motion.div

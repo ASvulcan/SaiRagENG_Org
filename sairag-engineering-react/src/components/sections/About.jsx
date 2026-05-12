@@ -66,7 +66,7 @@ export function About() {
   ];
 
   return (
-    <section id="about" className="py-20 md:py-28" style={{ backgroundColor: "var(--bg)" }}>
+    <section id="about" className="min-h-screen py-20 md:py-28" style={{ backgroundColor: "var(--bg)" }}>
       <div className="max-w-6xl mx-auto px-6">
         {/* Header */}
         <motion.div

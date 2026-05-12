@@ -8,13 +8,13 @@
   :root {
     --bg: #ffffff;
     --bg-alt: #f8f9fa;
-    --bg-card: rgba(255, 255, 255, 0.9);
+    --bg-card: #ffffff;
     --text: #1a1a2e;
     --text-muted: #6b7280;
     --border: #e5e7eb;
-    --accent: #f97316;
-    --accent-rgb: 249, 115, 22;
-    --accent-light: #ffedd5;
+    --accent: #00AEEF;
+    --accent-rgb: 0, 174, 239;
+    --accent-light: #e0f7fe;
     --nav-bg: rgba(255, 255, 255, 0.9);
   }
 
@@ -25,9 +25,9 @@
     --text: #f9fafb;
     --text-muted: #9ca3af;
     --border: #1f1f1f;
-    --accent: #f97316;
-    --accent-rgb: 249, 115, 22;
-    --accent-light: #431407;
+    --accent: #2563eb;
+    --accent-rgb: 37, 99, 235;
+    --accent-light: #1e3a5f;
     --nav-bg: rgba(0, 0, 0, 0.8);
   }
 
@@ -79,10 +79,27 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
   }
 
+  .card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(var(--accent-rgb), 0.08), transparent 40%);
+    pointer-events: none;
+  }
+
   .card:hover {
-    border-color: rgba(var(--accent-rgb), 0.4);
-    box-shadow: 0 16px 32px -16px rgba(var(--accent-rgb), 0.15);
+    border-color: rgba(var(--accent-rgb), 0.5);
+    box-shadow: 
+      0 0 20px rgba(var(--accent-rgb), 0.15),
+      0 0 40px rgba(var(--accent-rgb), 0.08),
+      0 16px 32px -16px rgba(var(--accent-rgb), 0.2);
     transform: translateY(-4px);
+  }
+
+  .card:hover::before {
+    opacity: 1;
   }
 
   .btn-accent {

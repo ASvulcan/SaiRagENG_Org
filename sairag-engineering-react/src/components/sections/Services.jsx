@@ -1,20 +1,19 @@
 import { useState, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Layers, Box } from "lucide-react";
-
-// Import icons only (no bg images needed for blur effect anymore)
-import facadeIcon from "../../assest/frame.png";
-import mechIcon from "../../assest/system.png";
+import { Layers, Box, Building2, Cog } from "lucide-react";
 
 const services = [
   {
     id: "01",
     title: "Façade Engineering",
-    icon: facadeIcon,
-    isPng: true,
-    description: "Comprehensive façade design and detailing aligned with project specifications and international standards.",
+    icon: Building2,
+    isPng: false,
+    description: "We provide comprehensive façade design and detailing solutions aligned with project specifications and international standards.",
     items: [
-      "Curtain Wall Systems (Unitized, Semi-unitized / Stick)",
+      {
+        title: "Curtain Wall Systems",
+        subItems: ["Unitized", "Semi-unitized (Stick systems)"],
+      },
       "Structural Glazing Systems",
       "Skylights and Canopies",
       "Dry Cladding Systems",
@@ -27,7 +26,7 @@ const services = [
     title: "Structural Support & Interface Design",
     icon: Layers,
     isPng: false,
-    description: "Design and detailing of critical support elements for structural integrity and seamless integration.",
+    description: "Design and detailing of critical support elements to ensure structural integrity and seamless integration.",
     items: [
       "Mullions and Transoms",
       "Brackets and Anchoring Systems",
@@ -38,8 +37,8 @@ const services = [
   {
     id: "03",
     title: "Mechanical Design Services",
-    icon: mechIcon,
-    isPng: true,
+    icon: Cog,
+    isPng: false,
     description: "Engineering support for mechanical components and assemblies focused on functionality and manufacturability.",
     items: [
       "3D Modeling and Design Development",
@@ -66,10 +65,26 @@ const services = [
 function ServiceCard({ id, title, description, items, open, onToggle, icon: Icon, isPng }) {
   const cardRef = useRef(null);
 
+  const handleMouseMove = useCallback((e) => {
+    const rect = cardRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    cardRef.current.style.setProperty("--mouse-x", `${x}%`);
+    cardRef.current.style.setProperty("--mouse-y", `${y}%`);
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    cardRef.current?.style.setProperty("--mouse-x", "50%");
+    cardRef.current?.style.setProperty("--mouse-y", "50%");
+  }, []);
+
   return (
     <div
       ref={cardRef}
-      className={`group relative bg-bg-card backdrop-blur-md border rounded-xl p-7 transition-all duration-500 cursor-pointer ${
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className={`group card relative bg-bg-card backdrop-blur-md border rounded-xl p-7 transition-all duration-500 cursor-pointer ${
         open
           ? "border-accent shadow-2xl shadow-accent-rgb/20 scale-[1.02]"
           : "border-border/50 hover:border-accent/40 hover:shadow-2xl hover:shadow-accent-rgb/10 hover:-translate-y-2 dark:border-border"
@@ -85,10 +100,7 @@ function ServiceCard({ id, title, description, items, open, onToggle, icon: Icon
 
       <div className="relative z-10 flex items-start justify-between gap-4">
         <div className="flex-1">
-          <div className="flex items-center justify-between mb-4">
-            <span className="text-xs font-bold font-mono tracking-wider text-accent opacity-80 group-hover:opacity-100 transition-opacity">
-              {id}
-            </span>
+          <div className="flex items-center justify-end mb-4">
             <div className="p-2 rounded-lg bg-accent/5 group-hover:bg-accent/10 transition-colors duration-300">
               {isPng ? (
                 <img 
@@ -114,7 +126,7 @@ function ServiceCard({ id, title, description, items, open, onToggle, icon: Icon
           transition={{ duration: 0.3, ease: "easeInOut" }}
           className="mt-1 shrink-0"
         >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-accent">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" strokeWidth="2" stroke="currentColor" className={`transition-colors duration-300 ${open ? "text-red-600" : "text-accent/50 group-hover:text-accent/80"}`}>
             <path d="M6 9l6 6 6-6" />
           </svg>
         </motion.div>
@@ -133,16 +145,37 @@ function ServiceCard({ id, title, description, items, open, onToggle, icon: Icon
             <div className="mt-5 pt-4 border-t border-border">
               <ul className="space-y-3">
                 {items.map((item, i) => (
-                  <motion.li
-                    key={i}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.2, delay: i * 0.03 }}
-                    className="flex items-start gap-2.5 text-sm text-text-muted"
-                  >
-                    <span className="mt-0.5 shrink-0 text-accent text-xs">▹</span>
-                    {item}
-                  </motion.li>
+                  typeof item === "string" ? (
+                    <motion.li
+                      key={i}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.2, delay: i * 0.03 }}
+                      className="flex items-start gap-2.5 text-sm text-text-muted"
+                    >
+                      <span className="mt-0.5 shrink-0 text-accent text-xs">▹</span>
+                      {item}
+                    </motion.li>
+                  ) : (
+                    <motion.li
+                      key={i}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.2, delay: i * 0.03 }}
+                    >
+                      <div className="flex items-start gap-2.5 text-sm text-text-muted">
+                        <span className="mt-0.5 shrink-0 text-accent text-xs">▹</span>
+                        {item.title}
+                      </div>
+                      <ul className="ml-6 mt-1 space-y-0.5">
+                        {item.subItems.map((sub, j) => (
+                          <li key={j} className="flex items-start gap-2 text-sm text-text-muted pl-5">
+                            {sub}
+                          </li>
+                        ))}
+                      </ul>
+                    </motion.li>
+                  )
                 ))}
               </ul>
             </div>
@@ -161,7 +194,7 @@ export function Services() {
   }, []);
 
   return (
-    <section id="services" className="py-20 md:py-28 relative overflow-hidden bg-bg">
+    <section id="services" className="min-h-screen py-20 md:py-28 relative overflow-hidden bg-bg">
       {/* Subtle gradient accent instead of expensive blur background */}
       <div className="absolute inset-0 pointer-events-none">
         <div 

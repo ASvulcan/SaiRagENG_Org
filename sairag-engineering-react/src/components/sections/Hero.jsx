@@ -3,10 +3,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronRight } from "lucide-react";
 
 // Import local background images from assest folder
-import bg1 from "../../assest/aleksandrs-zeltisevs-O-vNkUIFgtA-unsplash.jpg";
-import bg2 from "../../assest/chris-hunter-JtyoQYtPdsU-unsplash.jpg";
-import bg3 from "../../assest/declan-sun-ltpDzIWKYR8-unsplash.jpg";
-import bg4 from "../../assest/samuel-pagel-h7ABHB1X4s8-unsplash.jpg";
+import bg1 from "../../assest/11.jpg";
+import bg2 from "../../assest/22.jpg";
+import bg3 from "../../assest/33.jpg";
+import bg4 from "../../assest/44.jpg";
 
 // Import icons
 import facadeIcon from "../../assest/frame.png";
@@ -17,7 +17,7 @@ const heroImages = [bg1, bg2, bg3, bg4];
 // Pre-calculate static styles
 const overlayStyle = {
   background:
-    "linear-gradient(135deg, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.4) 100%)",
+    "linear-gradient(135deg, rgba(46, 57, 71, 0.9) 0%, rgba(0, 0, 0, 0) 50%, rgba(0,0,0,0.15) 100%)",
 };
 
 export function Hero() {
@@ -37,7 +37,7 @@ export function Hero() {
   return (
     <section
       id="home"
-      className="relative h-screen w-full flex items-center justify-center overflow-hidden"
+      className="relative min-h-screen w-full flex items-center justify-center overflow-hidden"
     >
       {/* Background carousel with crossfade */}
       <div className="absolute inset-0 overflow-hidden">
@@ -87,27 +87,28 @@ export function Hero() {
         ))}
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-16 md:gap-24">
+      <div className="max-w-7xl mx-auto px-6 relative z-10 w-full h-full flex items-center justify-center">
+        <div className="flex flex-col items-center justify-center text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="max-w-2xl"
           >
-            <div className="flex items-center gap-3 mb-5">
+            <div className="flex items-center justify-center gap-3 mb-5">
               <div className="w-6 h-px bg-accent" />
-              <span className="text-[10px] tracking-[0.15em] uppercase text-accent">
+              <span className="text-[10px] tracking-[0.15em] uppercase text-white">
                 Precision Driven
               </span>
+              <div className="w-6 h-px bg-accent" />
             </div>
 
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light tracking-tight leading-[1.1] mb-6 text-white">
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-light tracking-tight leading-[1.05] mb-6 text-white">
               SaiRag<br />
-              <span className="text-white/60">Engineering LLP</span>
+              <span className="text-blue-800">Engineering LLP</span>
             </h1>
 
-            <p className="text-sm md:text-base leading-relaxed max-w-lg mb-8 text-white/70">
+            <p className="text-base md:text-lg leading-relaxed max-w-xl mb-8 text-white/70">
               Advanced Façade Engineering & Mechanical Design Solutions — Delivering precision-driven design, detailing, CAD/BIM, and mechanical engineering support for global projects.
             </p>
 
@@ -116,64 +117,6 @@ export function Hero() {
               className="inline-flex items-center gap-2 px-6 py-2.5 text-xs font-medium rounded-lg transition-all bg-accent text-white hover:brightness-110 shadow-lg shadow-accent-rgb/20"
             >
               Explore Services
-            </a>
-          </motion.div>
-
-          {/* Side Links */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
-            className="hidden lg:flex flex-col w-80"
-          >
-            {/* Façade Link */}
-            <a 
-              href="#services" 
-              className="group flex items-center justify-between py-6 text-white/60 hover:text-white transition-all duration-300 border-b border-white/10"
-            >
-              <div className="flex items-center gap-6">
-                <div className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors duration-500">
-                  <img 
-                    src={facadeIcon} 
-                    alt="Façade" 
-                    className="w-6 h-6 object-contain invert opacity-70 group-hover:opacity-100 transition-opacity duration-500" 
-                    loading="lazy"
-                  />
-                </div>
-                <span className="text-sm tracking-[0.2em] uppercase font-medium group-hover:translate-x-1 transition-transform duration-300">
-                  Façade Engineering
-                </span>
-              </div>
-              <ChevronRight 
-                size={32} 
-                strokeWidth={1} 
-                className="text-white/20 group-hover:text-accent group-hover:translate-x-2 transition-all duration-500" 
-              />
-            </a>
-
-            {/* Mechanical Link */}
-            <a 
-              href="#services" 
-              className="group flex items-center justify-between py-6 text-white/60 hover:text-white transition-all duration-300 border-b border-white/10"
-            >
-              <div className="flex items-center gap-6">
-                <div className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors duration-500">
-                  <img 
-                    src={mechIcon} 
-                    alt="Mechanical" 
-                    className="w-6 h-6 object-contain invert opacity-70 group-hover:opacity-100 transition-opacity duration-500" 
-                    loading="lazy"
-                  />
-                </div>
-                <span className="text-sm tracking-[0.2em] uppercase font-medium group-hover:translate-x-1 transition-transform duration-300">
-                  Mechanical Design
-                </span>
-              </div>
-              <ChevronRight 
-                size={32} 
-                strokeWidth={1} 
-                className="text-white/20 group-hover:text-accent group-hover:translate-x-2 transition-all duration-500" 
-              />
             </a>
           </motion.div>
         </div>

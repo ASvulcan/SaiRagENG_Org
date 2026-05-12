@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Link } from "wouter";
 import { useLocation } from "wouter";
 import { Menu, X, Sun, Moon } from "lucide-react";
@@ -8,6 +8,7 @@ import { useTheme } from "../../context/ThemeContext";
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
   const { dark, toggle } = useTheme();
 
   useEffect(() => {
@@ -19,6 +20,71 @@ export function Navbar() {
   const [location] = useLocation();
 
   const isHome = location === "/";
+
+  // Track visible section on home page
+  useEffect(() => {
+    if (!isHome) return;
+    const sections = [
+      { id: "home", priority: 0 },
+      { id: "services", priority: 1 },
+      { id: "career", priority: 2 },
+      { id: "contact", priority: 3 },
+    ];
+    const intersecting = new Map();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            intersecting.set(entry.target.id, entry.intersectionRatio);
+          } else {
+            intersecting.delete(entry.target.id);
+          }
+        });
+        if (intersecting.size > 0) {
+          let best = null;
+          let bestRatio = 0;
+          let bestPriority = Infinity;
+          intersecting.forEach((ratio, id) => {
+            const p = sections.find((s) => s.id === id)?.priority ?? Infinity;
+            if (p < bestPriority || (p === bestPriority && ratio > bestRatio)) {
+              best = id;
+              bestRatio = ratio;
+              bestPriority = p;
+            }
+          });
+          if (best) setActiveSection(best);
+        }
+      },
+      { threshold: [0.1, 0.3, 0.5], rootMargin: "-100px 0px 0px 0px" }
+    );
+    sections.forEach(({ id }) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, [isHome]);
+
+  const isActive = (name) => {
+    if (name === "Home" && location === "/") return activeSection === "home" || activeSection === "";
+    if (name === "About" && location === "/about") return true;
+    if (name === "Services" && isHome && activeSection === "services") return true;
+    if (name === "Career" && isHome && activeSection === "career") return true;
+    if (name === "Contact" && isHome && activeSection === "contact") return true;
+    return false;
+  };
+
+  const scrollToSection = useCallback((e, href) => {
+    e.preventDefault();
+    if (href.startsWith("#")) {
+      const el = document.getElementById(href.slice(1));
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    } else {
+      window.location.href = href;
+    }
+    setMobileOpen(false);
+  }, []);
 
   // Transparent only on home page hero (not scrolled). Solid background everywhere else.
   const atHero = isHome && !scrolled;
@@ -70,20 +136,34 @@ export function Navbar() {
         <nav className="hidden md:flex items-center gap-8">
           {links.map((l) =>
             l.href.startsWith("/") ? (
-              <Link
+              <a
                 key={l.name}
                 href={l.href}
-                className="nav-link text-base md:text-lg font-semibold"
+                onClick={(e) => { e.preventDefault(); window.location.href = l.href; }}
+                className={`nav-link text-base md:text-lg font-semibold relative pb-1 transition-colors ${
+                  isActive(l.name) ? "text-accent" : ""
+                }`}
+                style={isActive(l.name) ? { color: "var(--accent)" } : {}}
               >
                 {l.name}
-              </Link>
+                {isActive(l.name) && (
+                  <span className="absolute -bottom-0.5 left-0 right-0 h-0.5 rounded-full" style={{ backgroundColor: "var(--accent)" }} />
+                )}
+              </a>
             ) : (
               <a
                 key={l.name}
                 href={l.href}
-                className="nav-link text-base md:text-lg font-semibold"
+                className={`nav-link text-base md:text-lg font-semibold relative pb-1 transition-colors ${
+                  isActive(l.name) ? "text-accent" : ""
+                }`}
+                style={isActive(l.name) ? { color: "var(--accent)" } : {}}
+                onClick={(e) => scrollToSection(e, l.href)}
               >
                 {l.name}
+                {isActive(l.name) && (
+                  <span className="absolute -bottom-0.5 left-0 right-0 h-0.5 rounded-full" style={{ backgroundColor: "var(--accent)" }} />
+                )}
               </a>
             )
           )}
@@ -130,9 +210,11 @@ export function Navbar() {
                 <Link
                   key={l.name}
                   href={l.href}
-                  className="py-3 text-lg font-semibold transition-colors"
-                  style={{ color: "var(--text)" }}
-                  onClick={() => setMobileOpen(false)}
+                  className={`py-3 text-lg font-semibold transition-colors ${
+                    isActive(l.name) ? "text-accent" : ""
+                  }`}
+                  style={isActive(l.name) ? { color: "var(--accent)" } : { color: "var(--text)" }}
+                  onClick={() => { window.scrollTo(0, 0); setMobileOpen(false); }}
                 >
                   {l.name}
                 </Link>
@@ -140,9 +222,11 @@ export function Navbar() {
                 <a
                   key={l.name}
                   href={l.href}
-                  className="py-3 text-lg font-semibold transition-colors"
-                  style={{ color: "var(--text)" }}
-                  onClick={() => setMobileOpen(false)}
+                  className={`py-3 text-lg font-semibold transition-colors ${
+                    isActive(l.name) ? "text-accent" : ""
+                  }`}
+                  style={isActive(l.name) ? { color: "var(--accent)" } : { color: "var(--text)" }}
+                  onClick={(e) => { scrollToSection(e, l.href); setMobileOpen(false); }}
                 >
                   {l.name}
                 </a>

@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Footer } from "../components/layout/Footer";
 import { Navbar } from "../components/layout/Navbar";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 
 function Counter({ from, to, suffix = "", label }) {
   const [count, setCount] = useState(from);
@@ -52,6 +52,50 @@ function Counter({ from, to, suffix = "", label }) {
   );
 }
 
+function MouseGlowCard() {
+  const ref = useRef(null);
+  const handleMouseMove = useCallback((e) => {
+    const rect = ref.current?.getBoundingClientRect();
+    if (!rect) return;
+    ref.current.style.setProperty("--mouse-x", `${((e.clientX - rect.left) / rect.width) * 100}%`);
+    ref.current.style.setProperty("--mouse-y", `${((e.clientY - rect.top) / rect.height) * 100}%`);
+  }, []);
+  const handleMouseLeave = useCallback(() => {
+    ref.current?.style.setProperty("--mouse-x", "50%");
+    ref.current?.style.setProperty("--mouse-y", "50%");
+  }, []);
+
+  return (
+    <motion.div
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: 0.15 }}
+      className="mb-16 p-8 md:p-10 rounded-xl card"
+    >
+      <h3 className="text-lg font-bold mb-5 flex items-center gap-2" style={{ color: "var(--text)" }}>
+        <span className="w-1 h-5 rounded-full" style={{ backgroundColor: "var(--accent)" }} />
+        Word from Our CEO
+      </h3>
+      <div className="space-y-4 text-sm md:text-base leading-relaxed" style={{ color: "var(--text-muted)" }}>
+        <p>SaiRag Engineering was founded with a clear objective — to deliver dependable, technically sound, and execution-focused engineering solutions in the façade industry.</p>
+        <p>Over the past few years, we have had the opportunity to contribute to several complex façade projects across Europe, particularly in timber façade systems. These projects demand not only technical expertise, but also a deep understanding of coordination, constructability, detailing precision, and adherence to international standards.</p>
+        <p>While SaiRag Engineering is a young organization, my professional journey spans more than three decades across Mechanical and Automobile Engineering. Working on technically demanding assignments for international clients has shaped our approach to quality, discipline, and engineering responsibility.</p>
+        <p>Our team brings experience in both timber and aluminium façade systems, enabling us to approach projects with broader technical perspective and practical engineering judgement. Despite the challenges that come with complex global projects — evolving design inputs, coordination requirements, and demanding timelines — our team has consistently delivered with commitment and professionalism.</p>
+        <p>What we value most is the trust we have built through reliable delivery, technical depth, and attention to detail.</p>
+        <p>As we continue to grow, our focus remains unchanged: delivering precise, buildable, and standards-driven engineering solutions while building long-term partnerships with our clients.</p>
+        <p>We look forward to the journey ahead.</p>
+        <div className="pt-4 border-t" style={{ borderColor: "var(--border)" }}>
+          <p className="font-semibold" style={{ color: "var(--text)" }}>— Ravindra Vaddavalli</p>
+          <p className="text-sm" style={{ color: "var(--text-muted)" }}>Founder & CEO, SaiRag Engineering LLP</p>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 export default function AboutPage() {
   const stats = [
     { from: 2000, to: 2023, label: "Year Founded" },
@@ -98,15 +142,9 @@ export default function AboutPage() {
                 Our Foundation
               </h3>
               <div className="space-y-4 text-sm md:text-base leading-relaxed" style={{ color: "var(--text-muted)" }}>
-                <p>
-                  SaiRag Engineering LLP was established with a clear objective—to deliver high-quality, reliable engineering support in the field of facade design and detailing. Based in Pune, India, we have steadily built our capabilities by working closely with international clients, particularly across Europe.
-                </p>
-                <p>
-                  Beginning with façade engineering, we have expanded our expertise to include mechanical design services, enabling us to support a broader range of engineering requirements. Our growth has been driven by a consistent focus on precision, technical understanding, and adherence to global standards.
-                </p>
-                <p>
-                  Today, we operate as a dependable offshore partner, supporting clients with accurate, buildable, and well-coordinated engineering solutions.
-                </p>
+                <p>SaiRag Engineering LLP was established with a clear objective—to deliver high-quality, reliable engineering support in the field of facade design and detailing. Based in Pune, India, we have steadily built our capabilities by working closely with international clients, particularly across Europe.</p>
+                <p>Beginning with façade engineering, we have expanded our expertise to include mechanical design services, enabling us to support a broader range of engineering requirements. Our growth has been driven by a consistent focus on precision, technical understanding, and adherence to global standards.</p>
+                <p>Today, we operate as a dependable offshore partner, supporting clients with accurate, buildable, and well-coordinated engineering solutions.</p>
               </div>
             </motion.div>
 
@@ -123,30 +161,7 @@ export default function AboutPage() {
             </motion.div>
 
             {/* Word from Our CEO */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.15 }}
-              className="mb-16 p-8 md:p-10 rounded-xl card"
-            >
-              <h3 className="text-lg font-bold mb-5 flex items-center gap-2" style={{ color: "var(--text)" }}>
-                <span className="w-1 h-5 rounded-full" style={{ backgroundColor: "var(--accent)" }} />
-                Word from Our CEO
-              </h3>
-              <div className="space-y-4 text-sm md:text-base leading-relaxed" style={{ color: "var(--text-muted)" }}>
-                <p>SaiRag Engineering was founded with a clear objective — to deliver dependable, technically sound, and execution-focused engineering solutions in the façade industry.</p>
-                <p>Over the past few years, we have had the opportunity to contribute to several complex façade projects across Europe, particularly in timber façade systems. These projects demand not only technical expertise, but also a deep understanding of coordination, constructability, detailing precision, and adherence to international standards.</p>
-                <p>While SaiRag Engineering is a young organization, my professional journey spans more than three decades across Mechanical and Automobile Engineering. Working on technically demanding assignments for international clients has shaped our approach to quality, discipline, and engineering responsibility.</p>
-                <p>Our team brings experience in both timber and aluminium façade systems, enabling us to approach projects with broader technical perspective and practical engineering judgement. Despite the challenges that come with complex global projects — evolving design inputs, coordination requirements, and demanding timelines — our team has consistently delivered with commitment and professionalism.</p>
-                <p>What we value most is the trust we have built through reliable delivery, technical depth, and attention to detail.</p>
-                <p>As we continue to grow, our focus remains unchanged: delivering precise, buildable, and standards-driven engineering solutions while building long-term partnerships with our clients.</p>
-                <p>We look forward to the journey ahead.</p>
-                <div className="pt-4 border-t" style={{ borderColor: "var(--border)" }}>
-                  <p className="font-semibold" style={{ color: "var(--text)" }}>— Ravindra Vaddavalli</p>
-                  <p className="text-sm" style={{ color: "var(--text-muted)" }}>Founder & CEO, SaiRag Engineering LLP</p>
-                </div>
-              </div>
-            </motion.div>
+            <MouseGlowCard />
 
             {/* Our Mission */}
             <motion.div
@@ -227,7 +242,7 @@ export default function AboutPage() {
             >
               <h3 className="text-lg font-bold mb-4 flex items-center gap-2" style={{ color: "var(--text)" }}>
                 <span className="w-1 h-5 rounded-full" style={{ backgroundColor: "var(--accent)" }} />
-                Working with Us
+                Why SaiRag
               </h3>
               <div className="space-y-4 text-sm md:text-base leading-relaxed" style={{ color: "var(--text-muted)" }}>
                 <p>We collaborate with façade consultants, contractors, fabricators, and engineering firms who value dependable support and high-quality outputs.</p>
