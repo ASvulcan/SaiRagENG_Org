@@ -2,5 +2,8 @@
   "framework": null,
   "buildCommand": "cd sairag-engineering-react && npx vite build",
   "outputDirectory": "sairag-engineering-react/dist",
-  "installCommand": "cd sairag-engineering-react && npm install"
+  "installCommand": "cd sairag-engineering-react && npm install",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
 }
