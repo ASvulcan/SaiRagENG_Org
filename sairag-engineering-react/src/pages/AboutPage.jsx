@@ -3,7 +3,7 @@ import { Footer } from "../components/layout/Footer";
 import { Navbar } from "../components/layout/Navbar";
 import { useEffect, useState, useRef, useCallback } from "react";
 
-function Counter({ from, to, suffix = "", label }) {
+function Counter({ from, to, suffix = "", label, useLocale = true }) {
   const [count, setCount] = useState(from);
   const [started, setStarted] = useState(false);
   const ref = useRef(null);
@@ -43,7 +43,7 @@ function Counter({ from, to, suffix = "", label }) {
   return (
     <div ref={ref} className="border-l-2 pl-4" style={{ borderColor: "var(--accent)" }}>
       <div className="text-2xl md:text-3xl font-bold font-mono mb-1" style={{ color: "var(--text)" }}>
-        {count.toLocaleString()}{suffix}
+        {useLocale ? count.toLocaleString() : count}{suffix}
       </div>
       <div className="text-[10px] font-semibold tracking-wider uppercase" style={{ color: "var(--text-muted)" }}>
         {label}
@@ -156,7 +156,7 @@ export default function AboutPage() {
               className="grid grid-cols-3 gap-6 mb-16"
             >
               {stats.map((s) => (
-                <Counter key={s.label} from={s.from} to={s.to} suffix={s.suffix || ""} label={s.label} />
+                <Counter key={s.label} from={s.from} to={s.to} suffix={s.suffix || ""} label={s.label} useLocale={s.label !== "Year Founded"} />
               ))}
             </motion.div>
 

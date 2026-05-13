@@ -1,18 +1,15 @@
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronRight } from "lucide-react";
 
 // Import local background images from assest folder
-import bg1 from "../../assest/11.jpg";
-import bg2 from "../../assest/22.jpg";
-import bg3 from "../../assest/33.jpg";
-import bg4 from "../../assest/44.jpg";
+import bg1 from "../../assest/11.jpeg";
+import bg2 from "../../assest/22.jpeg";
 
 // Import icons
 import facadeIcon from "../../assest/frame.png";
 import mechIcon from "../../assest/system.png";
 
-const heroImages = [bg1, bg2, bg3, bg4];
+const heroImages = [bg1, bg2];
 
 // Pre-calculate static styles
 const overlayStyle = {
@@ -37,7 +34,7 @@ export function Hero() {
   return (
     <section
       id="home"
-      className="relative min-h-screen w-full flex items-center justify-center overflow-hidden"
+      className="relative min-h-screen w-full flex items-start justify-start overflow-hidden"
     >
       {/* Background carousel with crossfade */}
       <div className="absolute inset-0 overflow-hidden">
@@ -87,37 +84,17 @@ export function Hero() {
         ))}
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10 w-full h-full flex items-center justify-center">
-        <div className="flex flex-col items-center justify-center text-center">
+      <div className="max-w-7xl mx-auto px-6 relative z-10 w-full h-full flex items-start justify-start pt-32 pl-12 md:pl-16 lg:pl-20">
+        <div className="flex flex-col items-start justify-start text-left">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="max-w-2xl"
+            className="max-w-3xl lg:max-w-4xl"
           >
-            <div className="flex items-center justify-center gap-3 mb-5">
-              <div className="w-6 h-px bg-accent" />
-              <span className="text-[10px] tracking-[0.15em] uppercase text-white">
-                Precision Driven
-              </span>
-              <div className="w-6 h-px bg-accent" />
-            </div>
-
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-light tracking-tight leading-[1.05] mb-6 text-white">
-              SaiRag<br />
-              <span className="text-blue-800">Engineering LLP</span>
-            </h1>
-
-            <p className="text-base md:text-lg leading-relaxed max-w-xl mb-8 text-white/70">
+            <p className="text-base md:text-lg leading-relaxed max-w-2xl text-white/70">
               Advanced Façade Engineering & Mechanical Design Solutions — Delivering precision-driven design, detailing, CAD/BIM, and mechanical engineering support for global projects.
             </p>
-
-            <a
-              href="#services"
-              className="inline-flex items-center gap-2 px-6 py-2.5 text-xs font-medium rounded-lg transition-all bg-accent text-white hover:brightness-110 shadow-lg shadow-accent-rgb/20"
-            >
-              Explore Services
-            </a>
           </motion.div>
         </div>
       </div>

@@ -10,6 +10,7 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const { dark, toggle } = useTheme();
+  const [, setLocation] = useLocation();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -73,7 +74,7 @@ export function Navbar() {
     return false;
   };
 
-  const scrollToSection = useCallback((e, href) => {
+  const navigateTo = useCallback((e, href) => {
     e.preventDefault();
     if (href.startsWith("#")) {
       const el = document.getElementById(href.slice(1));
@@ -81,21 +82,28 @@ export function Navbar() {
         el.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     } else {
-      window.location.href = href;
+      // Use wouter SPA navigation instead of full page reload
+      if (href.includes("#")) {
+        const [path] = href.split("#");
+        setLocation(path);
+        // Small delay to let the route render before scrolling
+        setTimeout(() => {
+          const id = href.split("#")[1];
+          const el = document.getElementById(id);
+          if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 100);
+      } else {
+        setLocation(href);
+      }
     }
     setMobileOpen(false);
-  }, []);
+  }, [setLocation]);
 
-  // Transparent only on home page hero (not scrolled). Solid background everywhere else.
-  const atHero = isHome && !scrolled;
-  const navBg = atHero
-    ? "transparent"
-    : "var(--bg)";
+  // Always use solid background - never transparent
+  const navBg = "var(--bg)";
 
-  // White text only on home hero (visible against dark overlay), themed text elsewhere
-  const textColor = atHero
-    ? "#ffffff"
-    : "var(--text)";
+  // Always use themed text color
+  const textColor = "var(--text)";
 
   const links = [
     { name: "Home", href: isHome ? "#home" : "/" },
@@ -105,9 +113,8 @@ export function Navbar() {
     { name: "Contact", href: isHome ? "#contact" : "/#contact" },
   ];
 
-  // When mobile menu is open on the hero, switch header to themed background
-  const effectiveNavBg = mobileOpen && atHero ? "var(--bg)" : navBg;
-  const effectiveTextColor = mobileOpen && atHero ? "var(--text)" : textColor;
+  const effectiveNavBg = navBg;
+  const effectiveTextColor = textColor;
 
   return (
     <header
@@ -139,7 +146,7 @@ export function Navbar() {
               <a
                 key={l.name}
                 href={l.href}
-                onClick={(e) => { e.preventDefault(); window.location.href = l.href; }}
+                onClick={(e) => navigateTo(e, l.href)}
                 className={`nav-link text-base md:text-lg font-semibold relative pb-1 transition-colors ${
                   isActive(l.name) ? "text-accent" : ""
                 }`}
@@ -158,7 +165,7 @@ export function Navbar() {
                   isActive(l.name) ? "text-accent" : ""
                 }`}
                 style={isActive(l.name) ? { color: "var(--accent)" } : {}}
-                onClick={(e) => scrollToSection(e, l.href)}
+                onClick={(e) => navigateTo(e, l.href)}
               >
                 {l.name}
                 {isActive(l.name) && (
@@ -226,7 +233,7 @@ export function Navbar() {
                     isActive(l.name) ? "text-accent" : ""
                   }`}
                   style={isActive(l.name) ? { color: "var(--accent)" } : { color: "var(--text)" }}
-                  onClick={(e) => { scrollToSection(e, l.href); setMobileOpen(false); }}
+                  onClick={(e) => { navigateTo(e, l.href); setMobileOpen(false); }}
                 >
                   {l.name}
                 </a>
