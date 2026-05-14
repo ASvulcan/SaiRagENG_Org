@@ -1,12 +1,10 @@
 import { Route, Switch } from "wouter";
 import Home from "./pages/Home";
-import AboutPage from "./pages/AboutPage";
 
 function App() {
   return (
     <Switch>
       <Route path="/" component={Home} />
-      <Route path="/about" component={AboutPage} />
       <Route>
         <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: "var(--bg)", color: "var(--text)" }}>
           <div className="text-center">

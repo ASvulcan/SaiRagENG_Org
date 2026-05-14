@@ -27,6 +27,7 @@ export function Navbar() {
     if (!isHome) return;
     const sections = [
       { id: "home", priority: 0 },
+      { id: "about", priority: 0.5 },
       { id: "services", priority: 1 },
       { id: "career", priority: 2 },
       { id: "contact", priority: 3 },
@@ -67,7 +68,7 @@ export function Navbar() {
 
   const isActive = (name) => {
     if (name === "Home" && location === "/") return activeSection === "home" || activeSection === "";
-    if (name === "About" && location === "/about") return true;
+    if (name === "About" && isHome && activeSection === "about") return true;
     if (name === "Services" && isHome && activeSection === "services") return true;
     if (name === "Career" && isHome && activeSection === "career") return true;
     if (name === "Contact" && isHome && activeSection === "contact") return true;
@@ -107,7 +108,7 @@ export function Navbar() {
 
   const links = [
     { name: "Home", href: isHome ? "#home" : "/" },
-    { name: "About", href: "/about" },
+    { name: "About", href: isHome ? "#about" : "/#about" },
     { name: "Services", href: isHome ? "#services" : "/#services" },
     { name: "Career", href: isHome ? "#career" : "/#career" },
     { name: "Contact", href: isHome ? "#contact" : "/#contact" },
@@ -128,13 +129,13 @@ export function Navbar() {
       }}
     >
       <div className="max-w-6xl mx-auto px-6 flex items-center justify-between h-20 md:h-24">
-        <Link href="/" className="flex items-center gap-3 group">
+        <Link href="/" className="flex items-center gap-3 group" onClick={() => { if (location === "/") window.scrollTo({ top: 0, behavior: "smooth" }); }}>
           <Logo className="w-20 h-20 md:w-28 md:h-28 text-accent group-hover:scale-105 transition-transform" dark={dark} />
           <div className="flex flex-col leading-tight">
-            <span className="text-base md:text-lg font-light tracking-wide" style={{ color: "var(--nav-text-color)" }}>
+            <span className="text-base md:text-lg font-bold tracking-wide" style={{ color: "#092a5c" }}>
               SaiRag
             </span>
-            <span className="text-xs md:text-sm font-light tracking-[0.08em] opacity-50" style={{ color: "var(--nav-text-color)" }}>
+            <span className="text-sm md:text-base font-bold tracking-[0.08em]" style={{ color: "#092a5c" }}>
               Engineering LLP
             </span>
           </div>

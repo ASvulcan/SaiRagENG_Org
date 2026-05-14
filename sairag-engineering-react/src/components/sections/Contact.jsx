@@ -42,8 +42,8 @@ const contacts = [
   {
     icon: Mail,
     title: "Email",
-    value: "engineering@sairag.net",
-    href: "mailto:engineering@sairag.net",
+    value: "projects@sairag.net",
+    href: "mailto:projects@sairag.net",
   },
   {
     icon: Phone,
@@ -87,7 +87,7 @@ export function Contact() {
       `Name: ${form.name}\nEmail: ${form.email}\n\nMessage:\n${form.message}`
     );
 
-    window.location.href = `mailto:engineering@sairag.net?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:projects@sairag.net?subject=${subject}&body=${body}`;
 
     setSent(true);
 

@@ -37,10 +37,14 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           <div className="md:col-span-1">
             <div className="flex items-center gap-3 mb-4">
-              <Logo className="w-8 h-8 text-accent" />
-              <div>
-                <div className="text-sm font-semibold" style={{ color: "var(--text)" }}>SaiRag Engineering</div>
-                <div className="text-xs" style={{ color: "var(--text-muted)" }}>Engineering LLP</div>
+              <Logo className="w-24 h-24 text-accent" />
+              <div className="flex flex-col leading-tight">
+                <span className="text-base md:text-lg font-bold tracking-wide" style={{ color: "#092a5c" }}>
+                  SaiRag
+                </span>
+                <span className="text-sm md:text-base font-bold tracking-[0.08em]" style={{ color: "#092a5c" }}>
+                  Engineering LLP
+                </span>
               </div>
             </div>
             <p className="text-sm leading-relaxed max-w-xs" style={{ color: "var(--text-muted)" }}>
@@ -73,8 +77,8 @@ export function Footer() {
             <ul className="space-y-3 text-sm" style={{ color: "var(--text-muted)" }}>
               <li className="flex items-start gap-2.5">
                 <Mail size={14} className="mt-0.5 shrink-0" style={{ color: "var(--accent)" }} />
-                <a href="mailto:engineering@sairag.net" className="hover:underline" style={{ color: "var(--accent)" }}>
-                  engineering@sairag.net
+                <a href="mailto:projects@sairag.net" className="hover:underline" style={{ color: "var(--accent)" }}>
+                  projects@sairag.net
                 </a>
               </li>
               <li className="flex items-start gap-2.5">
@@ -97,11 +101,7 @@ export function Footer() {
           className="mt-10 pt-6 border-t flex flex-col md:flex-row justify-between items-center gap-3 text-xs"
           style={{ borderColor: "var(--border)", color: "var(--text-muted)" }}
         >
-          <p>&copy; 2024 SaiRag Engineering LLP. All rights reserved.</p>
-          <div className="flex gap-4">
-            <span>Engineering Precision</span>
-            <span>Delivered Globally</span>
-          </div>
+          <p>&copy; 2026 SaiRag Engineering LLP. All rights reserved.</p>
         </div>
       </div>
     </footer>
