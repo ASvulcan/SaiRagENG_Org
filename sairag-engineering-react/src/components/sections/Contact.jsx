@@ -151,10 +151,10 @@ export function Contact() {
         </motion.div>
 
         {/* Main Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mt-12 md:mt-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 mt-8 md:mt-16">
 
           {/* Contact Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 auto-rows-fr">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 auto-rows-fr">
 
             {contacts.map((c, i) => (
               <motion.div
@@ -169,10 +169,10 @@ export function Contact() {
                 className={i === 2 ? "sm:col-span-2" : ""}
               >
                 <GlowCard
-                  className={`card rounded-xl p-6 md:p-8 flex ${
+                  className={`card rounded-xl p-4 md:p-8 flex ${
                     i === 2
-                      ? "flex-row items-center gap-6 min-h-[220px] w-full"
-                      : "flex-col items-start gap-4"
+                      ? "flex-row items-center gap-3 md:gap-6"
+                      : "flex-col items-start gap-3 md:gap-4"
                   }`}
                 >
 
@@ -227,7 +227,7 @@ export function Contact() {
           </div>
 
           {/* Contact Form */}
-          <GlowCard className="card rounded-xl p-6 md:p-8">
+          <GlowCard className="card rounded-xl p-4 md:p-8">
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -246,7 +246,7 @@ export function Contact() {
 
               <form
                 onSubmit={handleSubmit}
-                className="flex flex-col gap-6"
+                className="flex flex-col gap-4 md:gap-6"
               >
 
                 {/* Name */}
@@ -267,7 +267,7 @@ export function Contact() {
                     value={form.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 text-sm rounded-lg border transition-all outline-none focus:ring-2 focus:border-accent"
+                    className="w-full px-3 md:px-4 py-2.5 md:py-3 text-sm md:text-base rounded-lg border transition-all outline-none focus:ring-2 focus:border-accent"
                     style={{
                       backgroundColor: "var(--bg)",
                       color: "var(--text)",
@@ -297,7 +297,7 @@ export function Contact() {
                     value={form.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 text-sm rounded-lg border transition-all outline-none focus:ring-2 focus:border-accent"
+                    className="w-full px-3 md:px-4 py-2.5 md:py-3 text-sm md:text-base rounded-lg border transition-all outline-none focus:ring-2 focus:border-accent"
                     style={{
                       backgroundColor: "var(--bg)",
                       color: "var(--text)",
@@ -327,7 +327,7 @@ export function Contact() {
                     onChange={handleChange}
                     required
                     rows={5}
-                    className="w-full px-4 py-3 text-sm rounded-lg border transition-all outline-none resize-none focus:ring-2 focus:border-accent"
+                    className="w-full px-3 md:px-4 py-2.5 md:py-3 text-sm md:text-base rounded-lg border transition-all outline-none resize-none focus:ring-2 focus:border-accent"
                     style={{
                       backgroundColor: "var(--bg)",
                       color: "var(--text)",
@@ -342,7 +342,7 @@ export function Contact() {
                 {/* Button */}
                 <button
                   type="submit"
-                  className="btn-accent inline-flex items-center gap-2 w-full justify-center py-3"
+                  className="btn-accent inline-flex items-center gap-2 w-full justify-center py-2.5 md:py-3 text-sm md:text-base"
                 >
                   <Send size={16} />
                   {sent ? "Sent!" : "Send Message"}

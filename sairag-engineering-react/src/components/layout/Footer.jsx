@@ -37,12 +37,12 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           <div className="md:col-span-1">
             <div className="flex items-center gap-3 mb-4">
-              <Logo className="w-24 h-24 text-accent" />
+              <Logo className="w-32 h-32 text-accent" />
               <div className="flex flex-col leading-tight">
-                <span className="text-base md:text-lg font-bold tracking-wide" style={{ color: "#092a5c" }}>
+                <span className="text-lg md:text-xl font-bold tracking-wide" style={{ color: "#092a5c" }}>
                   SaiRag
                 </span>
-                <span className="text-sm md:text-base font-bold tracking-[0.08em]" style={{ color: "#092a5c" }}>
+                <span className="text-base md:text-lg font-bold tracking-[0.08em]" style={{ color: "#092a5c" }}>
                   Engineering LLP
                 </span>
               </div>

@@ -93,7 +93,7 @@ function MouseGlowCard() {
             style={{ maxWidth: "100%", height: "auto" }}
           />
         </div>
-        <div className="space-y-4 text-sm md:text-base leading-relaxed text-left md:text-justify" style={{ color: "var(--text-muted)" }}> 
+          <div className="space-y-4 text-sm md:text-base leading-relaxed text-justify" style={{ color: "var(--text-muted)" }}>
           <p>SaiRag Engineering was founded with a clear objective — to deliver dependable, technically sound, and execution-focused engineering solutions in the façade industry.</p>
           <p>Over the past few years, we have had the opportunity to contribute to several complex façade projects across Europe, particularly in timber façade systems. These projects demand not only technical expertise, but also a deep understanding of coordination, constructability, detailing precision, and adherence to international standards.</p>
           <p>While SaiRag Engineering is a young organization, my professional journey spans more than three decades across Mechanical and Automobile Engineering. Working on technically demanding assignments for international clients has shaped our approach to quality, discipline, and engineering responsibility.</p>
@@ -149,13 +149,13 @@ export function About() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.05 }}
-          className="mb-16 max-w-4xl"
+          className="mb-16"
         >
           <h3 className="text-lg font-bold mb-4 flex items-center gap-2" style={{ color: "var(--text)" }}>
             <span className="w-1 h-5 rounded-full" style={{ backgroundColor: "var(--accent)" }} />
             Our Foundation
           </h3>
-          <div className="space-y-4 text-sm md:text-base leading-relaxed" style={{ color: "var(--text-muted)" }}>
+          <div className="space-y-4 text-sm md:text-base leading-relaxed text-justify" style={{ color: "var(--text-muted)" }}>
             <p>SaiRag Engineering LLP was established with a clear objective—to deliver high-quality, reliable engineering support in the field of facade design and detailing. Based in Pune, India, we have steadily built our capabilities by working closely with international clients, particularly across Europe.</p>
             <p>Beginning with façade engineering, we have expanded our expertise to include mechanical design services, enabling us to support a broader range of engineering requirements. Our growth has been driven by a consistent focus on precision, technical understanding, and adherence to global standards.</p>
             <p>Today, we operate as a dependable offshore partner, supporting clients with accurate, buildable, and well-coordinated engineering solutions.</p>
@@ -176,7 +176,7 @@ export function About() {
             ))}
           </div>
           <div className="flex items-center gap-6">
-            <Counter from={stats[2].from} to={stats[2].to} suffix={stats[2].suffix || ""} label={stats[2].label} useLocale={false} animate={true} />
+            <Counter from={stats[2].from} to={stats[2].to} suffix={stats[2].suffix || ""} label={stats[2].label} useLocale={true} animate={true} />
             <img
               src={graphsImg}
               alt="SaiRag Engineering - Growth Graph"
@@ -200,16 +200,16 @@ export function About() {
             <span className="w-1 h-5 rounded-full" style={{ backgroundColor: "var(--accent)" }} />
             Our Mission
           </h3>
-          <p className="text-sm md:text-base mb-4 leading-relaxed" style={{ color: "var(--text-muted)" }}>
+          <p className="text-sm md:text-base mb-4 leading-relaxed text-justify" style={{ color: "var(--text-muted)" }}>
             Our mission is to provide engineering solutions that combine accuracy, efficiency, and practical applicability. We are committed to supporting our clients with:
           </p>
-          <ul className="space-y-2 text-sm md:text-base" style={{ color: "var(--text-muted)" }}>
+          <ul className="space-y-2 text-sm md:text-base text-justify" style={{ color: "var(--text-muted)" }}>
             <li className="flex items-start gap-2"><span className="mt-1 shrink-0" style={{ color: "var(--accent)" }}>▹</span>High-quality facade and mechanical design deliverables</li>
             <li className="flex items-start gap-2"><span className="mt-1 shrink-0" style={{ color: "var(--accent)" }}>▹</span>Clear, coordinated, and standards-compliant documentation</li>
             <li className="flex items-start gap-2"><span className="mt-1 shrink-0" style={{ color: "var(--accent)" }}>▹</span>Reliable project execution aligned with client expectations</li>
             <li className="flex items-start gap-2"><span className="mt-1 shrink-0" style={{ color: "var(--accent)" }}>▹</span>A professional and transparent approach to collaboration</li>
           </ul>
-          <p className="text-sm md:text-base mt-4 leading-relaxed" style={{ color: "var(--text-muted)" }}>
+          <p className="text-sm md:text-base mt-4 leading-relaxed text-justify" style={{ color: "var(--text-muted)" }}>
             We aim to contribute to our clients' success by ensuring that every design output is technically sound and ready for execution.
           </p>
         </motion.div>
@@ -226,11 +226,11 @@ export function About() {
             <span className="w-1 h-5 rounded-full" style={{ backgroundColor: "var(--accent)" }} />
             Our Vision
           </h3>
-          <p className="text-sm md:text-base mb-4 leading-relaxed" style={{ color: "var(--text-muted)" }}>
+          <p className="text-sm md:text-base mb-4 leading-relaxed text-justify" style={{ color: "var(--text-muted)" }}>
             We aspire to become a trusted engineering partner for global clients, recognized for consistency, technical excellence, and reliability.
           </p>
-          <p className="text-sm md:text-base mb-4 leading-relaxed" style={{ color: "var(--text-muted)" }}>Our vision is to:</p>
-          <ul className="space-y-2 text-sm md:text-base" style={{ color: "var(--text-muted)" }}>
+          <p className="text-sm md:text-base mb-4 leading-relaxed text-justify" style={{ color: "var(--text-muted)" }}>Our vision is to:</p>
+          <ul className="space-y-2 text-sm md:text-base text-justify" style={{ color: "var(--text-muted)" }}>
             <li className="flex items-start gap-2"><span className="mt-1 shrink-0" style={{ color: "var(--accent)" }}>▹</span>Strengthen our position in facade engineering and mechanical design services</li>
             <li className="flex items-start gap-2"><span className="mt-1 shrink-0" style={{ color: "var(--accent)" }}>▹</span>Continuously enhance our capabilities in CAD, BIM, and advanced engineering tools</li>
             <li className="flex items-start gap-2"><span className="mt-1 shrink-0" style={{ color: "var(--accent)" }}>▹</span>Expand our presence across European and international markets</li>
@@ -250,11 +250,11 @@ export function About() {
             <span className="w-1 h-5 rounded-full" style={{ backgroundColor: "var(--accent)" }} />
             Our Approach
           </h3>
-          <p className="text-sm md:text-base mb-4 leading-relaxed" style={{ color: "var(--text-muted)" }}>
+          <p className="text-sm md:text-base mb-4 leading-relaxed text-justify" style={{ color: "var(--text-muted)" }}>
             At SaiRag Engineering, we believe that quality engineering is defined by attention to detail, clarity in communication, and a deep understanding of real-world execution.
           </p>
-          <p className="text-sm md:text-base mb-4 leading-relaxed" style={{ color: "var(--text-muted)" }}>Our work is guided by:</p>
-          <ul className="space-y-2 text-sm md:text-base" style={{ color: "var(--text-muted)" }}>
+          <p className="text-sm md:text-base mb-4 leading-relaxed text-justify" style={{ color: "var(--text-muted)" }}>Our work is guided by:</p>
+          <ul className="space-y-2 text-sm md:text-base text-justify" style={{ color: "var(--text-muted)" }}>
             <li className="flex items-start gap-2"><span className="mt-1 shrink-0" style={{ color: "var(--accent)" }}>▹</span>A strong focus on precision and detailing</li>
             <li className="flex items-start gap-2"><span className="mt-1 shrink-0" style={{ color: "var(--accent)" }}>▹</span>Alignment with international standards and best practices</li>
             <li className="flex items-start gap-2"><span className="mt-1 shrink-0" style={{ color: "var(--accent)" }}>▹</span>Seamless integration with client standards and workflows</li>
@@ -273,7 +273,7 @@ export function About() {
             <span className="w-1 h-5 rounded-full" style={{ backgroundColor: "var(--accent)" }} />
             Why SaiRag
           </h3>
-          <div className="space-y-4 text-sm md:text-base leading-relaxed" style={{ color: "var(--text-muted)" }}>
+          <div className="space-y-4 text-sm md:text-base leading-relaxed text-justify" style={{ color: "var(--text-muted)" }}>
             <p>We collaborate with façade consultants, contractors, fabricators, and engineering firms who value dependable support and high-quality outputs.</p>
             <p>By combining technical expertise with a structured and professional approach, we ensure that our clients receive engineering solutions they can rely on.</p>
           </div>
